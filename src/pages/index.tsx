@@ -1,12 +1,12 @@
 import { Inter } from 'next/font/google'
-import {Button} from "@nextui-org/react";
+import Editor from '@/components/Editor';
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   return (
     <>
-      Hello world!
+      <Editor />
     </>
   )
 }
