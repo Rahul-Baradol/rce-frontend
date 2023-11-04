@@ -6,9 +6,7 @@ const inter = Inter({ subsets: ['latin'] })
 export default function Home() {
   return (
     <>
-      <Button color="primary">
-        Button
-      </Button>
+      Hello world!
     </>
   )
 }
