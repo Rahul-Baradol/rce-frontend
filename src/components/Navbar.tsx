@@ -16,8 +16,8 @@ export default function Navbar() {
             <ul className='flex flex-row gap-5'>
                 {
                     navLinks.map((value, index): ReactNode => {
-                        return <li> 
-                            <Link className=' text-white' key={index} href={value.route}> { value.name } </Link> 
+                        return <li key={index}> 
+                            <Link className='text-white' href={value.route}> { value.name } </Link> 
                         </li>
                     })
                 }
