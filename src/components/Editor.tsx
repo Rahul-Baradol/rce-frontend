@@ -23,7 +23,7 @@ export default function Editor() {
                 />
                 
                 <div className='w-[80vw] flex flex-row items-center justify-between'>
-                    <Code color={verdict.color}> {verdict.message} </Code>
+                    <Code color="primary"> {verdict.message} </Code>
                     <Button onClick={() => {
                         fetch("http://localhost:3000/api/evaluate", {
                             method: "POST",
