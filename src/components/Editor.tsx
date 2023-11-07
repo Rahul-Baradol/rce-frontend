@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Button, Code, Textarea } from "@nextui-org/react";
 
+require('dotenv').config({ path: ".env.local" })
+
 export default function Editor() {
     const [code, setCode] = useState("");
     const [verdict, setVerdict] = useState({
@@ -25,15 +27,8 @@ export default function Editor() {
                 <div className='w-[80vw] flex flex-row items-center justify-between'>
                     <Code color="primary"> {verdict.message} </Code>
                     <Button onClick={() => {
-                        fetch("https://decise.vercel.app/api/evaluate", {
-                        // fetch("http://localhost:3000/api/evaluate", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({
-                                code: code
-                            })
+                        // fetch("https://decise.vercel.app/api/evaluate", {
+                        fetch("http://localhost:3000/api/evaluate", {
                         }).then((res) => {
                             return res.json();
                         }).then((data) => {
