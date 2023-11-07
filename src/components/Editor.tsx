@@ -25,7 +25,8 @@ export default function Editor() {
                 <div className='w-[80vw] flex flex-row items-center justify-between'>
                     <Code color="primary"> {verdict.message} </Code>
                     <Button onClick={() => {
-                        fetch("https://decise.vercel.app/api/evaluate", {
+                        // fetch("https://decise.vercel.app/api/evaluate", {
+                        fetch("http://localhost:3000/api/evaluate", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json"
