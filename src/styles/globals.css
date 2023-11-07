@@ -16,7 +16,13 @@
   }
 }
 
+::-webkit-scrollbar {
+  width: 0;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-start-rgb));
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
