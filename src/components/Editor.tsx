@@ -26,6 +26,7 @@ export default function Editor() {
                     <Code color="primary"> {verdict.message} </Code>
                     <Button onClick={() => {
                         fetch("https://decise.vercel.app/api/evaluate", {
+                        // fetch("http://localhost:3000/api/evaluate", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json"
