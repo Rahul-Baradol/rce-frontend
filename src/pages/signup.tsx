@@ -22,9 +22,16 @@ const SignUp = () => {
 
   return (
     <>
+      <style>
+        {`
+          .inp {
+            width: min(90vw, 450px);
+          }
+        `}
+      </style>
       <div className='mx-auto flex flex-col items-center p-5 w-[90vw] h-[85vh] gap-8'>
         <div className='text-3xl underline'> Sign up </div>
-        <div className='flex flex-col w-[50vw] md:w-[30vw] h-fit gap-5'>
+        <div className='flex flex-col h-fit gap-5 inp'>
           <Input
             value={email}
             type="email"
@@ -54,9 +61,9 @@ const SignUp = () => {
             className='dark'
           />
 
-        <Button className='h-[60px]' color="primary" variant="ghost">  
-          Sign Up
-        </Button>  
+          <Button className='h-[60px]' color="primary" variant="ghost">  
+            Sign Up
+          </Button>  
         </div>
       </div>
     </>
