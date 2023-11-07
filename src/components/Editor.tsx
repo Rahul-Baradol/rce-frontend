@@ -40,6 +40,9 @@ export default function Editor() {
                                 color: data.color,
                                 message: data.message
                             })
+                        }).catch((err)=>{
+                            console.log("Failed to connect.");
+                            console.log(err);
                         })
                     }} color="success">
                         Submit
