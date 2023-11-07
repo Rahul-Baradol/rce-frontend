@@ -43,12 +43,12 @@ export default async function handler(
 
     child.stdout.on("data", (data) => {      
       if (data.toString() === correct) {
-        res.json({
+        res.status(200).json({
           color: "success",
           message: "AC"
         });
       } else {
-        res.json({
+        res.status(200).json({
           color: "secondary",
           message: "WA"
         });
