@@ -18,41 +18,45 @@ export default async function handler(
   const extension = req.body.extension
 
   await fs.promises.writeFile(`./code.cpp`, `${code}`)
-  exec("g++ code.cpp", (error, stdout, stderr) => {
-    if (error) {
-      console.log(`error: ${error.message}`);
-      res.json({
-        color: "danger",
-        message: "CE"
-      })
-      return;
-    }
+  res.status(200).json({
+    color: "primary",
+    message: "Hurray!"
+  });
+  // exec("g++ code.cpp", (error, stdout, stderr) => {
+  //   if (error) {
+  //     console.log(`error: ${error.message}`);
+  //     res.json({
+  //       color: "danger",
+  //       message: "CE"
+  //     })
+  //     return;
+  //   }
 
-    if (stderr) {
-      console.log(`stderr: ${stderr}`);
-      res.json({
-        color: "danger",
-        message: "RE"
-      })
-      return;
-    }
+  //   if (stderr) {
+  //     console.log(`stderr: ${stderr}`);
+  //     res.json({
+  //       color: "danger",
+  //       message: "RE"
+  //     })
+  //     return;
+  //   }
     
-    const child = spawn("./a.out");
-    // child.stdin.write("4 5");
-    // child.stdin.end();
+  //   const child = spawn("./a.out");
+  //   // child.stdin.write("4 5");
+  //   // child.stdin.end();
 
-    child.stdout.on("data", (data) => {      
-      if (data.toString() === correct) {
-        res.status(200).json({
-          color: "success",
-          message: "AC"
-        });
-      } else {
-        res.status(200).json({
-          color: "secondary",
-          message: "WA"
-        });
-      }
-    });
-  })
+  //   child.stdout.on("data", (data) => {      
+  //     if (data.toString() === correct) {
+  //       res.status(200).json({
+  //         color: "success",
+  //         message: "AC"
+  //       });
+  //     } else {
+  //       res.status(200).json({
+  //         color: "secondary",
+  //         message: "WA"
+  //       });
+  //     }
+  //   });
+  // })
 }
