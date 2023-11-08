@@ -4,6 +4,7 @@ import React, { useMemo, useState } from 'react'
 const SignUp = () => {
   const [email, setValue] = useState("");
   const [pass, setPass] = useState("");
+  const [passConfirrm, setPassConfirm] = useState("");
 
   const validateEmail = (email: string) => email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
 
@@ -16,9 +17,15 @@ const SignUp = () => {
     setPass(e.target.value)
   }
 
+  const onChangePassConfirm = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassConfirm(e.target.value)
+  }
+
   const [isPassVisible, setisPassVisible] = useState(false);
+  const [isPassVisibleConfirm, setisPassVisibleConfirm] = useState(false);
 
   const toggleVisibility = () => setisPassVisible(!isPassVisible);
+  const toggleVisibilityConfirm = () => setisPassVisibleConfirm(!isPassVisibleConfirm);
 
   return (
     <>
@@ -38,7 +45,6 @@ const SignUp = () => {
             label="Email"
             isInvalid={isInvalid}
             color={isInvalid ? "danger" : "default"}
-            errorMessage={isInvalid && "Please enter a valid email"}
             onValueChange={setValue}
             className='dark'
           />
@@ -47,7 +53,6 @@ const SignUp = () => {
             label="Password"
             value={pass}
             onChange={onChangePass}
-            placeholder="Enter a password"
             endContent={
               <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
                 {isPassVisible ? (
@@ -61,7 +66,24 @@ const SignUp = () => {
             className='dark'
           />
 
-          <Button className='h-[60px]' color="primary" variant="ghost">  
+          <Input
+            label="Confirm Password"
+            value={passConfirrm}
+            onChange={onChangePassConfirm}
+            endContent={
+              <button className="focus:outline-none" type="button" onClick={toggleVisibilityConfirm}>
+                {isPassVisibleConfirm ? (
+                  <p className='text-gray-500 text-sm'>Hide</p>
+                ) : (
+                  <p className='text-gray-500 text-sm'>Show</p>
+                )}
+              </button>
+            }
+            type={isPassVisibleConfirm ? "text" : "password"}
+            className='dark'
+          />
+
+          <Button disabled={isInvalid || (email.length === 0) || (pass.length === 0) || (passConfirrm.length === 0) || (pass !== passConfirrm)} className='h-[60px] disabled:opacity-50' color="primary" variant="ghost">  
             Sign Up
           </Button>  
         </div>
