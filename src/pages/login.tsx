@@ -46,7 +46,6 @@ const Login = () => {
             label="Password"
             value={pass}
             onChange={onChangePass}
-            placeholder="Enter a password"
             endContent={
               <button className="focus:outline-none" type="button" onClick={toggleVisibility}>
                 {isPassVisible ? (

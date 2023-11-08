@@ -1,10 +1,23 @@
+"use client"
+require('dotenv').config({ path: ".env.local" })
 import { Button, Input } from '@nextui-org/react'
 import React, { useMemo, useState } from 'react'
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure} from "@nextui-org/react";
+
+require('dotenv').config({ path: ".env.local" })
 
 const SignUp = () => {
   const [email, setValue] = useState("");
   const [pass, setPass] = useState("");
   const [passConfirrm, setPassConfirm] = useState("");
+  const [isPassVisible, setisPassVisible] = useState(false);
+  const [isPassVisibleConfirm, setisPassVisibleConfirm] = useState(false);
+
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
+  const [signingUp, setSigningUp] = useState(false);
+
+  const [modalHeading, setModalHeading] = useState("");
+  const [modalDesc, setModalDesc] = useState("");
 
   const validateEmail = (email: string) => email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
 
@@ -21,12 +34,43 @@ const SignUp = () => {
     setPassConfirm(e.target.value)
   }
 
-  const [isPassVisible, setisPassVisible] = useState(false);
-  const [isPassVisibleConfirm, setisPassVisibleConfirm] = useState(false);
-
   const toggleVisibility = () => setisPassVisible(!isPassVisible);
   const toggleVisibilityConfirm = () => setisPassVisibleConfirm(!isPassVisibleConfirm);
 
+  const signUp = () => {
+    setSigningUp(true);
+    fetch(process.env.CREATE_PROFILE_API ?? "", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        email: email,
+        pass: pass
+      })
+    }).then((res) => {
+      setSigningUp(false);
+      return res.json();
+    }).then((data) => {
+      if (data.status === "exist") {
+        setModalHeading("Email already used!");
+        setModalDesc("It turns out that the given email is already in use! Please use a different email!");
+        onOpen();
+      } else {
+        setModalHeading("Let's go!");
+        setModalDesc("Profile created successfully!");
+        onOpen();
+      }
+      setSigningUp(false);
+    }).catch((err) => {
+      setModalHeading("Server Error");
+      setModalDesc("Couldn't connect to the server. Please check your internet connection.");
+      onOpen();
+      setSigningUp(false);
+    })
+  }
+ 
   return (
     <>
       <style>
@@ -41,6 +85,7 @@ const SignUp = () => {
         <div className='flex flex-col h-fit gap-5 inp'>
           <Input
             value={email}
+            disabled={signingUp}
             type="email"
             label="Email"
             isInvalid={isInvalid}
@@ -51,6 +96,7 @@ const SignUp = () => {
 
           <Input
             label="Password"
+            disabled={signingUp}
             value={pass}
             onChange={onChangePass}
             endContent={
@@ -68,6 +114,7 @@ const SignUp = () => {
 
           <Input
             label="Confirm Password"
+            disabled={signingUp}
             value={passConfirrm}
             onChange={onChangePassConfirm}
             endContent={
@@ -83,9 +130,29 @@ const SignUp = () => {
             className='dark'
           />
 
-          <Button disabled={isInvalid || (email.length === 0) || (pass.length === 0) || (passConfirrm.length === 0) || (pass !== passConfirrm)} className='h-[60px] disabled:opacity-50' color="primary" variant="ghost">  
-            Sign Up
+          <Button isLoading={signingUp} onClick={signUp} disabled={isInvalid || (email.length === 0) || (pass.length === 0) || (passConfirrm.length === 0) || (pass !== passConfirrm)} className='h-[60px] disabled:opacity-50' color="primary" variant="ghost">  
+            { !signingUp ? "Sign up" : "Creating Profile..." }
           </Button>  
+
+          <Modal className='dark' isOpen={isOpen} onOpenChange={onOpenChange}>
+            <ModalContent>
+              {(onClose) => (
+                <>
+                  <ModalHeader className="flex flex-col gap-1">{modalHeading}</ModalHeader>
+                  <ModalBody>
+                    <p> 
+                      {modalDesc}
+                    </p>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="primary" variant="light" onPress={onClose}>
+                      Close
+                    </Button>
+                  </ModalFooter>
+                </>
+              )}
+            </ModalContent>
+          </Modal>
         </div>
       </div>
     </>
