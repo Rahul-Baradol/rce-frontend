@@ -1,7 +1,7 @@
 import { Button, Input } from '@nextui-org/react';
 import React, { useMemo, useState } from 'react'
 
-const login = () => {
+const Login = () => {
   const [email, setValue] = useState("");
   const [pass, setPass] = useState("");
 
@@ -69,4 +69,4 @@ const login = () => {
   )
 }
 
-export default login
+export default Login
