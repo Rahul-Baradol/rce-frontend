@@ -1,13 +1,15 @@
 "use client"
 require('dotenv').config({ path: ".env.local" })
 import { Button, Input } from '@nextui-org/react'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure} from "@nextui-org/react";
+import { useRouter } from 'next/router';
 
 require('dotenv').config({ path: ".env.local" })
 
 const SignUp = () => {
-  const [email, setValue] = useState("");
+  const [email, setEmail] = useState("");
+  const [namee, setNamee] = useState("");
   const [pass, setPass] = useState("");
   const [passConfirrm, setPassConfirm] = useState("");
   const [isPassVisible, setisPassVisible] = useState(false);
@@ -18,6 +20,8 @@ const SignUp = () => {
 
   const [modalHeading, setModalHeading] = useState("");
   const [modalDesc, setModalDesc] = useState("");
+
+  const router = useRouter();
 
   const validateEmail = (email: string) => email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
 
@@ -37,6 +41,12 @@ const SignUp = () => {
   const toggleVisibility = () => setisPassVisible(!isPassVisible);
   const toggleVisibilityConfirm = () => setisPassVisibleConfirm(!isPassVisibleConfirm);
 
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      router.push(process.env.HOME_URL ?? "")
+    }
+  }, [router])
+
   const signUp = () => {
     setSigningUp(true);
     fetch(process.env.CREATE_PROFILE_API ?? "", {
@@ -46,6 +56,7 @@ const SignUp = () => {
       },
 
       body: JSON.stringify({
+        name: namee,
         email: email,
         pass: pass
       })
@@ -84,13 +95,21 @@ const SignUp = () => {
         <div className='text-3xl underline'> Sign up </div>
         <div className='flex flex-col h-fit gap-5 inp'>
           <Input
+            value={namee}
+            disabled={signingUp}
+            label="Name"
+            onValueChange={setNamee}
+            className='dark'
+          />
+          
+          <Input
             value={email}
             disabled={signingUp}
             type="email"
             label="Email"
             isInvalid={isInvalid}
             color={isInvalid ? "danger" : "default"}
-            onValueChange={setValue}
+            onValueChange={setEmail}
             className='dark'
           />
 
@@ -130,7 +149,7 @@ const SignUp = () => {
             className='dark'
           />
 
-          <Button isLoading={signingUp} onClick={signUp} disabled={isInvalid || (email.length === 0) || (pass.length === 0) || (passConfirrm.length === 0) || (pass !== passConfirrm)} className='h-[60px] disabled:opacity-50' color="primary" variant="ghost">  
+          <Button isLoading={signingUp} onClick={signUp} disabled={isInvalid || (namee.length === 0) || (email.length === 0) || (pass.length === 0) || (passConfirrm.length === 0) || (pass !== passConfirrm)} className='h-[60px] disabled:opacity-50' color="primary" variant="ghost">  
             { !signingUp ? "Sign up" : "Creating Profile..." }
           </Button>  
 

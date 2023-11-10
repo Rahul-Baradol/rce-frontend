@@ -7,6 +7,8 @@ const nextConfig = {
 module.exports = {
   nextConfig,
   env: {
-    CREATE_PROFILE_API: process.env.CREATE_PROFILE_API
+    HOME_URL: process.env.HOME_URL,
+    CREATE_PROFILE_API: process.env.CREATE_PROFILE_API,
+    LOGIN_API: process.env.LOGIN_API
   }
 };

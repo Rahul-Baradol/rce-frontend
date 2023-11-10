@@ -1,5 +1,6 @@
 import connectDB from '../../../middleware/connectdb';
 import profile from '../../../models/profile';
+import crypto from 'crypto'
 
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -8,6 +9,7 @@ type Data = {
 }
 
 async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+    const name = req.body.name;
     const email = req.body.email;
     const pass = req.body.pass;
 
@@ -21,9 +23,16 @@ async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
         })
     }
 
+    let cipher = crypto.createCipheriv(
+        'aes-256-cbc', Buffer.alloc(32, 0), Buffer.alloc(16, 0));
+
+   let encrypted = cipher.update(pass);
+   encrypted = Buffer.concat([encrypted, cipher.final()]);
+
     let newProfile = new profile({
+        name: name,
         email: email,
-        pass: pass
+        pass: encrypted.toString('hex')
     })
     newProfile.save();
 
