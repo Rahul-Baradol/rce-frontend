@@ -93,7 +93,7 @@ const SignUp = () => {
       </style>
       <div className='mx-auto flex flex-col items-center p-5 w-[90vw] h-[85vh] gap-8'>
         <div className='text-3xl underline'> Sign up </div>
-        <div className='flex flex-col h-fit gap-5 inp'>
+        <form className='flex flex-col h-fit gap-5 inp'>
           <Input
             value={namee}
             disabled={signingUp}
@@ -114,6 +114,7 @@ const SignUp = () => {
           />
 
           <Input
+            autoComplete='on'
             label="Password"
             disabled={signingUp}
             value={pass}
@@ -132,6 +133,7 @@ const SignUp = () => {
           />
 
           <Input
+            autoComplete='on'
             label="Confirm Password"
             disabled={signingUp}
             value={passConfirrm}
@@ -152,27 +154,27 @@ const SignUp = () => {
           <Button isLoading={signingUp} onClick={signUp} disabled={isInvalid || (namee.length === 0) || (email.length === 0) || (pass.length === 0) || (passConfirrm.length === 0) || (pass !== passConfirrm)} className='h-[60px] disabled:opacity-50' color="primary" variant="ghost">  
             { !signingUp ? "Sign up" : "Creating Profile..." }
           </Button>  
+        </form>
 
-          <Modal className='dark' isOpen={isOpen} onOpenChange={onOpenChange}>
-            <ModalContent>
-              {(onClose) => (
-                <>
-                  <ModalHeader className="flex flex-col gap-1">{modalHeading}</ModalHeader>
-                  <ModalBody>
-                    <p> 
-                      {modalDesc}
-                    </p>
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button color="primary" variant="light" onPress={onClose}>
-                      Close
-                    </Button>
-                  </ModalFooter>
-                </>
-              )}
-            </ModalContent>
-          </Modal>
-        </div>
+        <Modal className='dark' isOpen={isOpen} onOpenChange={onOpenChange}>
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1">{modalHeading}</ModalHeader>
+                <ModalBody>
+                  <p> 
+                    {modalDesc}
+                  </p>
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="primary" variant="light" onPress={onClose}>
+                    Close
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
       </div>
     </>
   )
