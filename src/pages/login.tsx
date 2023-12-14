@@ -39,6 +39,11 @@ const Login = (props: any) => {
   const login = (e: any) => {
     e.preventDefault();
     setLoggingIn(true);
+
+    fetch("http://localhost:3000/api/sample").then(d => d.json()).then(res => {
+      console.log(res);
+    })
+
     fetch(process.env.LOGIN_API ?? "", {
       method: "POST",
       headers: {
