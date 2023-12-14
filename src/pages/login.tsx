@@ -40,7 +40,7 @@ const Login = (props: any) => {
     e.preventDefault();
     setLoggingIn(true);
 
-    fetch("http://localhost:3000/api/sample").then(d => d.json()).then(res => {
+    fetch("https://decisepreview.vercel.app/api/sample").then(d => d.json()).then(res => {
       console.log(res);
     })
 
