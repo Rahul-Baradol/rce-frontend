@@ -28,7 +28,7 @@ export default function Navbar(props: any) {
                                 <div>Welcome {props.user.name}!</div>
                                 <button onClick={() => {
                                     localStorage.removeItem('token');
-                                    props.setToken("");
+                                    props.setAuthToken("");
                                 }}>Log out</button>
                             </div>
                     }
