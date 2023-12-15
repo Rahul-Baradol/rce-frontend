@@ -40,10 +40,6 @@ const Login = (props: any) => {
     e.preventDefault();
     setLoggingIn(true);
 
-    fetch("https://decisepreview.vercel.app/api/sample").then(d => d.json()).then(res => {
-      console.log(res);
-    })
-
     fetch(process.env.LOGIN_API ?? "", {
       method: "POST",
       headers: {
