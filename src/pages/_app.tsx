@@ -5,25 +5,25 @@ import { useEffect, useState } from 'react'
 
 require('dotenv').config({ path: '.env.local' });
 
-const jsonwebtoken = require('jsonwebtoken')
+const jsonwebtoken = require('jsonwebtoken');
 
 export default function App({ Component, pageProps: {session, ...pageProps} }: AppProps) {
-  const [token, setToken] = useState("");
+  const [authToken, setAuthToken] = useState("");
   const [user, setUser] = useState("");
 
   useEffect(() => {
-    if (localStorage.getItem('token')) {
-      setToken(localStorage.getItem('token') ?? "");  
-      setUser(jsonwebtoken.verify(localStorage.getItem('token'), process.env.JWT_KEY) ?? "");
+    if (localStorage.getItem('auth')) {
+      setAuthToken(localStorage.getItem('auth') ?? "");  
+      setUser(jsonwebtoken.verify(localStorage.getItem('auth'), process.env.JWT_KEY) ?? "");
     } else {
       setUser("");
     }
-  }, [token])
+  }, [authToken])
 
   return (
     <main className='h-screen w-screen'>
-      <Navbar user={user} setToken={setToken} />
-      <Component {...pageProps} setToken={setToken} />
+      <Navbar user={user} setAuthToken={setAuthToken} />
+      <Component {...pageProps} setAuthToken={setAuthToken} />
     </main>
   )
 }
