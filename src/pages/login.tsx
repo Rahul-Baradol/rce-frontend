@@ -39,6 +39,7 @@ const Login = (props: any) => {
   const login = (e: any) => {
     e.preventDefault();
     setLoggingIn(true);
+
     fetch(process.env.LOGIN_API ?? "", {
       method: "POST",
       headers: {
