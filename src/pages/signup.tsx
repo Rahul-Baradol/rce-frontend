@@ -42,7 +42,7 @@ const SignUp = () => {
   const toggleVisibilityConfirm = () => setisPassVisibleConfirm(!isPassVisibleConfirm);
 
   useEffect(() => {
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem('auth')) {
       router.push(process.env.HOME_URL ?? "")
     }
   }, [router])

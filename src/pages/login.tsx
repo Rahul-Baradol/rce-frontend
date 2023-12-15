@@ -31,7 +31,7 @@ const Login = (props: any) => {
   const toggleVisibility = () => setisPassVisible(!isPassVisible);
 
   useEffect(() => {
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem('auth')) {
       router.push(process.env.HOME_URL ?? "");
     }
   }, [router])
@@ -54,8 +54,8 @@ const Login = (props: any) => {
     .then((data) => {
       setLoggingIn(false);
       if (data && data.token) {
-        localStorage.setItem("token", data.token);
-        props.setToken(data.token);
+        localStorage.setItem("auth", data.token);
+        props.setAuthToken(data.token);
         router.push(process.env.HOME_URL ?? "");
       } else {
         setModalHeading("Invalid Credentials");
