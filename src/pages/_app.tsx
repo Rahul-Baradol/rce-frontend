@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 
 require('dotenv').config({ path: '.env.local' });
 
-const jsonwebauthToken = require('jsonwebauthToken')
+const jsonwebToken = require('jsonwebToken');
 
 export default function App({ Component, pageProps: {session, ...pageProps} }: AppProps) {
   const [authToken, setAuthToken] = useState("");
@@ -14,7 +14,7 @@ export default function App({ Component, pageProps: {session, ...pageProps} }: A
   useEffect(() => {
     if (localStorage.getItem('auth')) {
       setAuthToken(localStorage.getItem('auth') ?? "");  
-      setUser(jsonwebauthToken.verify(localStorage.getItem('auth'), process.env.JWT_KEY) ?? "");
+      setUser(jsonwebToken.verify(localStorage.getItem('auth'), process.env.JWT_KEY) ?? "");
     } else {
       setUser("");
     }

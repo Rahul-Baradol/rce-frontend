@@ -27,7 +27,7 @@ export default function Navbar(props: any) {
                             <div className='flex flex-row gap-4 items-center'>
                                 <div>Welcome {props.user.name}!</div>
                                 <button onClick={() => {
-                                    localStorage.removeItem('token');
+                                    localStorage.removeItem('auth');
                                     props.setAuthToken("");
                                 }}>Log out</button>
                             </div>
