@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { Button, Code, Textarea } from "@nextui-org/react";
+import { useEffect } from 'react';
+import { socket } from '../socket'
 
 require('dotenv').config({ path: ".env.local" })
 
-export default function Editor() {
+export default function Editor(props: any) {
     const [code, setCode] = useState("");
     const [verdict, setVerdict] = useState({
         color: "primary",
@@ -12,6 +14,23 @@ export default function Editor() {
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCode(e.target.value)
+    }
+
+    function submitCode() {
+        try {
+            const data = {
+                jwt: localStorage.getItem('auth'),
+                code: code
+            }
+
+            if (props.isConnected) {
+                socket.emit('submitCode', JSON.stringify(data));        
+            } else {
+                console.log("Not connected to the socket server.");
+            }
+        } catch(error) {
+            console.log("Couldn't send the message via socket.");
+        }
     }
 
     return (
@@ -26,23 +45,8 @@ export default function Editor() {
                 
                 <div className='w-[80vw] flex flex-row items-center justify-between'>
                     <Code color="primary"> {verdict.message} </Code>
-                    <Button onClick={() => {
-                        // fetch("https://decise.vercel.app/api/evaluate", {
-                        fetch("http://localhost:3000/api/evaluate", {
-                        }).then((res) => {
-                            return res.json();
-                        }).then((data) => {
-                            setVerdict({
-                                color: data.color,
-                                message: data.message
-                            })
-                        }).catch((err)=>{
-                            console.log("Failed to connect.");
-                            console.log(err);
-                        })
-                    }} color="success">
+                    <Button onClick={submitCode} color="success">
                         Submit
-                    
                     </Button>
                 </div>
             </div>
