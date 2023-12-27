@@ -3,13 +3,24 @@ import React, { ReactNode, useEffect, useState } from 'react'
 import { navLinks } from "../../constants"
 import Link from 'next/link'
 import { Poppins } from 'next/font/google'
+import { useDispatch, useSelector } from 'react-redux'
+import { setUser, setEmail } from '../features/userSlice';
 
 const poppins = Poppins({
     weight: '100',
     subsets: ['latin']
 })
 
-export default function Navbar(props: any) {
+export default function Navbar() {
+    const user = useSelector((state: any) => state.users.user);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (localStorage.getItem('auth')) {
+            dispatch(setUser(localStorage.getItem("user")));
+            dispatch(setEmail(localStorage.getItem("email")));
+        }
+    }, [dispatch]) 
 
     return (
         <>
@@ -17,7 +28,7 @@ export default function Navbar(props: any) {
                 <Link className={`${poppins.className} text-3xl`} href="/"> decise </Link>
                 <ul className='flex flex-row gap-5'>
                     {
-                        !props.user ?
+                        !user ?
                             navLinks.map((value, index): ReactNode => {
                                 return <li key={index}>
                                     <Link className='text-white' href={value.route}> {value.name} </Link>
@@ -25,10 +36,14 @@ export default function Navbar(props: any) {
                             })
                             : 
                             <div className='flex flex-row gap-4 items-center'>
-                                <div>Welcome {props.user.name}!</div>
+                                <div>Welcome {user}!</div>
                                 <button onClick={() => {
                                     localStorage.removeItem('auth');
-                                    props.setAuthToken("");
+                                    localStorage.removeItem("user");
+                                    localStorage.removeItem("email");
+
+                                    dispatch(setUser(""));
+                                    dispatch(setEmail(""));
                                 }}>Log out</button>
                             </div>
                     }

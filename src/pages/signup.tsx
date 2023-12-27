@@ -1,5 +1,4 @@
 "use client"
-require('dotenv').config({ path: ".env.local" })
 import { Button, Input } from '@nextui-org/react'
 import React, { useEffect, useMemo, useState } from 'react'
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure} from "@nextui-org/react";
@@ -9,7 +8,7 @@ require('dotenv').config({ path: ".env.local" })
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
-  const [namee, setNamee] = useState("");
+  const [userName, setUserName] = useState("");
   const [pass, setPass] = useState("");
   const [passConfirrm, setPassConfirm] = useState("");
   const [isPassVisible, setisPassVisible] = useState(false);
@@ -56,14 +55,19 @@ const SignUp = () => {
       },
 
       body: JSON.stringify({
-        name: namee,
+        name: userName,
         email: email,
         pass: pass
       })
     }).then((res) => {
-      setSigningUp(false);
       return res.json();
     }).then((data) => {
+      setSigningUp(false);
+      setUserName("");
+      setEmail("");
+      setPass("");
+      setPassConfirm("");
+
       if (data.status === "exist") {
         setModalHeading("Email already used!");
         setModalDesc("It turns out that the given email is already in use! Please use a different email!");
@@ -73,12 +77,16 @@ const SignUp = () => {
         setModalDesc("Profile created successfully!");
         onOpen();
       }
-      setSigningUp(false);
     }).catch((err) => {
       setModalHeading("Server Error");
       setModalDesc("Couldn't connect to the server. Please check your internet connection.");
       onOpen();
+
       setSigningUp(false);
+      setUserName("");
+      setEmail("");
+      setPass("");
+      setPassConfirm("");
     })
   }
  
@@ -95,10 +103,10 @@ const SignUp = () => {
         <div className='text-3xl underline'> Sign up </div>
         <form className='flex flex-col h-fit gap-5 inp'>
           <Input
-            value={namee}
+            value={userName}
             disabled={signingUp}
             label="Name"
-            onValueChange={setNamee}
+            onValueChange={setUserName}
             className='dark'
           />
           
@@ -151,7 +159,7 @@ const SignUp = () => {
             className='dark'
           />
 
-          <Button isLoading={signingUp} onClick={signUp} disabled={isInvalid || (namee.length === 0) || (email.length === 0) || (pass.length === 0) || (passConfirrm.length === 0) || (pass !== passConfirrm)} className='h-[60px] disabled:opacity-50' color="primary" variant="ghost">  
+          <Button isLoading={signingUp} onClick={signUp} disabled={isInvalid || (userName.length === 0) || (email.length === 0) || (pass.length === 0) || (passConfirrm.length === 0) || (pass !== passConfirrm)} className='h-[60px] disabled:opacity-50' color="primary" variant="ghost">  
             { !signingUp ? "Sign up" : "Creating Profile..." }
           </Button>  
         </form>

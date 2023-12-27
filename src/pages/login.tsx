@@ -1,8 +1,11 @@
+"use client"
 require('dotenv').config({ path: ".env.local" })
 
 import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@nextui-org/react';
 import { useRouter } from 'next/router';
 import React, { useEffect, useMemo, useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { setUser, setEmail } from '../features/userSlice';
 
 const Login = (props: any) => {
   const [email, setValue] = useState("");
@@ -14,6 +17,7 @@ const Login = (props: any) => {
   const [modalDesc, setModalDesc] = useState("");
 
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const validateEmail = (email: string) => email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
 
@@ -55,7 +59,11 @@ const Login = (props: any) => {
       setLoggingIn(false);
       if (data && data.token) {
         localStorage.setItem("auth", data.token);
-        props.setAuthToken(data.token);
+        localStorage.setItem("user", data.user);
+        localStorage.setItem("email", data.email);
+
+        dispatch(setUser(data.user));
+        dispatch(setEmail(data.email));        
         router.push(process.env.HOME_URL ?? "");
       } else {
         setModalHeading("Invalid Credentials");
