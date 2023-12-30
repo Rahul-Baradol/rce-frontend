@@ -3,7 +3,7 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { socket } from '../app/socket';
+import { socket } from '../other/socket';
 import { setIsConnected } from '../features/judgeSocketConnectionSlice'
 
 require('dotenv').config({ path: '.env.local' });

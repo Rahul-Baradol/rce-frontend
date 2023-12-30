@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Code, Textarea } from "@nextui-org/react";
 import { useEffect } from 'react';
-import { socket } from '../app/socket'
+import { socket } from '../other/socket'
 import { useDispatch, useSelector } from 'react-redux';
 
 require('dotenv').config({ path: ".env.local" })

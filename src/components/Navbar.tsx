@@ -1,6 +1,6 @@
 "use client"
 import React, { ReactNode, useEffect, useState } from 'react'
-import { navLinks } from "../../constants"
+import { navLeftLinks, navRightLinks } from "../../constants"
 import Link from 'next/link'
 import { Poppins } from 'next/font/google'
 import { useDispatch, useSelector } from 'react-redux'
@@ -20,21 +20,32 @@ export default function Navbar() {
             dispatch(setUser(localStorage.getItem("user")));
             dispatch(setEmail(localStorage.getItem("email")));
         }
-    }, [dispatch]) 
+    }, [dispatch])
 
     return (
         <>
             <nav className="p-5 flex flex-row justify-around">
-                <Link className={`${poppins.className} text-3xl`} href="/"> decise </Link>
-                <ul className='flex flex-row gap-5'>
-                    {
-                        !user ?
-                            navLinks.map((value, index): ReactNode => {
+                <div className='flex flex-row items-center gap-8'>
+                    <Link className={`${poppins.className} text-3xl`} href="/"> decise </Link>
+                    <ul className='flex flex-row gap-5' >
+                        {
+                            navLeftLinks.map((value, index): ReactNode => {
                                 return <li key={index}>
                                     <Link className='text-white' href={value.route}> {value.name} </Link>
                                 </li>
                             })
-                            : 
+                        }
+                    </ul>
+                </div>
+                <ul className='flex flex-row gap-5'>
+                    {
+                        !user ?
+                            navRightLinks.map((value, index): ReactNode => {
+                                return <li key={index}>
+                                    <Link className='text-white' href={value.route}> {value.name} </Link>
+                                </li>
+                            })
+                            :
                             <div className='flex flex-row gap-4 items-center'>
                                 <div>Welcome {user}!</div>
                                 <button onClick={() => {
