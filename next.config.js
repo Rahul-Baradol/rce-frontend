@@ -5,6 +5,9 @@ const nextConfig = {
 }
 
 module.exports = {
+  experimental: {
+    appDir: true
+  },
   nextConfig,
   env: {
     HOME_URL: process.env.HOME_URL,

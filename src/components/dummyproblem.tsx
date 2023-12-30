@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { socket } from '../other/socket';
 import { setIsConnected } from '../features/judgeSocketConnectionSlice'
+import Editor from './Editor';
 
 require('dotenv').config({ path: '.env.local' });
 
@@ -50,7 +51,9 @@ function Problem() {
    }, [dispatch])
 
    return (
-      <></>
+      <>
+         <Editor />
+      </>
    )
 }
 
