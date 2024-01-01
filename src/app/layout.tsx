@@ -1,7 +1,4 @@
-"use client"
-import { Provider, useSelector } from 'react-redux';
 import Navbar from '@/components/Navbar';
-import store from '@/other/store';
 import '@/styles/globals.css'
 
 export default function RootLayout({
@@ -11,12 +8,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <title>Decise</title>
+      </head>
       <body>
-        <section className='w-screen h-screen'>
-          <Provider store={store}>
+        <section className='w-screen min-h-screen'>
             <Navbar />
             {children}
-          </Provider>
         </section>
       </body>
     </html>

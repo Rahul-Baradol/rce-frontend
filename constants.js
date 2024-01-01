@@ -15,4 +15,9 @@ export const navLeftLinks = [
         name: "Problems",
         route: "/problemset"
     },
+
+    {
+        name: "Discuss",
+        route: "/discuss"
+    }
 ]
