@@ -1,4 +1,4 @@
-export const navLinks = [
+export const navRightLinks = [
     {
         name: "Sign up",
         route: "/signup"
@@ -7,5 +7,17 @@ export const navLinks = [
     {
         name: "Login",
         route: "/login"
+    }
+]
+
+export const navLeftLinks = [
+    {
+        name: "Problems",
+        route: "/problemset"
+    },
+
+    {
+        name: "Discuss",
+        route: "/discuss"
     }
 ]

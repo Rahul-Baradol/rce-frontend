@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 import { Button, Code, Textarea } from "@nextui-org/react";
 import { useEffect } from 'react';
-import { socket } from '../socket'
+import { socket } from '../other/socket'
+import { useDispatch, useSelector } from 'react-redux';
 
 require('dotenv').config({ path: ".env.local" })
 
-export default function Editor(props: any) {
+export default function Editor() {
+    const isConnected = useSelector((state: any) => state.isConnected);
+
     const [code, setCode] = useState("");
     const [verdict, setVerdict] = useState({
         color: "primary",
@@ -23,7 +26,7 @@ export default function Editor(props: any) {
                 code: code
             }
 
-            if (props.isConnected) {
+            if (isConnected) {
                 socket.emit('submitCode', JSON.stringify(data));        
             } else {
                 console.log("Not connected to the socket server.");
