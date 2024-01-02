@@ -3,7 +3,6 @@ import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import ProblemSection from './problemsection';
-import EditorSection from './editorsection';
 import { Button, Card, CardBody, Input, Tab, Tabs, Textarea } from '@nextui-org/react';
 import EditorialSection from './editorialsection';
 import SubmissionSection from './submissionssection';
