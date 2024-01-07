@@ -32,7 +32,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/other/socket.js",
+    "src/other/socket.ts",
     ".next/types/**/*.ts"
   ],
   "exclude": [

@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Card, CardBody, CardHeader, Pagination } from "@nextui-org/react";
 import { Poppins } from 'next/font/google';
 import Link from 'next/link';
@@ -8,6 +8,18 @@ const poppins = Poppins({
    weight: '200',
    subsets: ['latin']
 })
+
+function filterTitle(title: string): string {
+   const splitTitle = title.split('_');
+   let filteredTitle = "";
+   splitTitle.forEach((value: string, index: number) => {
+      if (index != 0) {
+         filteredTitle += " ";
+      }
+      filteredTitle += value[0].toUpperCase() + value.slice(1);
+   })
+   return filteredTitle;
+}
 
 export default function Compo(props: any) {
    const [problems, setProblems] = useState(props.problems);
@@ -40,7 +52,6 @@ export default function Compo(props: any) {
                         query: `
                            {
                               problems (page: ${page}) {
-                                 id
                                  title
                                  description
                               }
@@ -60,9 +71,9 @@ export default function Compo(props: any) {
 
             {
                problems.map((value: any, index: any) => {
-                  return <Link key={index} href={`${process.env.HOME_URL}/problem?id=${value.id}`}>
+                  return <Link key={index} href={`${process.env.HOME_URL}/problem/${value.title}`}>
                      <Card className="problem dark max-w-full min-h-[60px] p-4">
-                        <CardHeader className='text-xl'> {value.title} </CardHeader>
+                        <CardHeader className='text-xl'> { filterTitle(value.title) } </CardHeader>
                         <CardBody>
                            {value.description}
                         </CardBody>
