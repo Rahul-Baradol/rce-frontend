@@ -50,7 +50,7 @@ export default function Problem(props: any) {
                         <DynamicEditorialSection />
                      </Tab>
                      <Tab key="submissions" title="Submissions"> 
-                        <DynamicSubmissionSection refreshSubmisisonsFlag={refreshSubmisisonsFlag} />
+                        <DynamicSubmissionSection title={props.problem.title} refreshSubmisisonsFlag={refreshSubmisisonsFlag} />
                      </Tab>
                   </Tabs>
                </div>

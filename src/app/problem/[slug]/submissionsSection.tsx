@@ -44,7 +44,7 @@ export default function SubmissionSection(props: any) {
          body: JSON.stringify({
             query: `
                      {
-                        submissions (page: 1, user: "${email}") {
+                        submissions (page: 1, user: "${email}", problemTitle: "${props.title}") {
                            status
                            code
                            time
@@ -85,7 +85,7 @@ export default function SubmissionSection(props: any) {
                            body: JSON.stringify({
                               query: `
                               {
-                                 submissions (page: ${page}, user: "${email}") {
+                                 submissions (page: ${page}, user: "${email}", problemTitle: "${props.title}") {
                                     status
                                     code
                                     time
