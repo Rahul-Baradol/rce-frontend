@@ -4,7 +4,7 @@ export const judgeSocketConnectionSlice = createSlice({
    name: 'judge',
 
    initialState: {
-      isConnected: false
+      isConnected: false,
    },
 
    reducers: {

@@ -1,4 +1,4 @@
-import Compo from "./compo";
+import Compo from "./main";
 
 export default async function Problems() {
    const res = await fetch("http://localhost:3003/graphql", {
@@ -11,7 +11,6 @@ export default async function Problems() {
          query: `
             {
                problems (page: 1) {
-                  id
                   title
                   description
                }
