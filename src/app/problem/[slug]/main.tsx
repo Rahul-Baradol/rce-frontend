@@ -58,7 +58,7 @@ export default function Problem(props: any) {
                <>
                   {
                      (typeof window !== "undefined" && localStorage.getItem('auth')) ?
-                        <DynamicEditorSection tab={tab} setTab={setTab} setRefreshSubmisisonsFlag={setRefreshSubmisisonsFlag} />
+                        <DynamicEditorSection problemTitle={props.problem.title} tab={tab} setTab={setTab} setRefreshSubmisisonsFlag={setRefreshSubmisisonsFlag} />
                         : <DynamicEditorLoginPrompt />
                   }
                </>

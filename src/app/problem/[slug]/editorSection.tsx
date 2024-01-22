@@ -13,16 +13,20 @@ export default function EditorSection(props: any) {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [socketIsConnected, setSocketIsConnected] = useState(false);
 
-  const [selectedKeys, setSelectedKeys] = useState<any>(new Set(["CPP"]));
-
-  useEffect(() => {
-
-  }, [selectedKeys]);
+  const [selectedKeys, setSelectedKeys] = useState<any>(new Set(["C++"]));
 
   const selectedValue = useMemo(
     () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
     [selectedKeys]
   );
+
+  const languageExtensionMap = new Map<any, any>([
+    ["C++", "cpp"],
+    ["Java", "java"],
+    ["JavaScript", "js"],
+    ["Python", "py"],
+    ["Go", "go"]
+  ])
 
   useEffect(() => {
     if (socket) {
@@ -68,10 +72,14 @@ export default function EditorSection(props: any) {
   }, []);
 
   function submitCode() {
+    const langSelected = languageExtensionMap.get(Array.from(selectedKeys)[0]);
+    
     try {
       const data = {
         jwt: localStorage.getItem('auth'),
-        code: code
+        lang: langSelected,
+        code: code,
+        problemTitle: props.problemTitle
       }
 
       if (socket) {
@@ -106,10 +114,10 @@ export default function EditorSection(props: any) {
             selectedKeys={selectedKeys}
             onSelectionChange={setSelectedKeys}
           >
-            <DropdownItem key="CPP">CPP</DropdownItem>
+            <DropdownItem key="C++">C++</DropdownItem>
             <DropdownItem key="Java">Java</DropdownItem>
             <DropdownItem key="Python">Python</DropdownItem>
-            <DropdownItem key="Javascript">JavaScript</DropdownItem>
+            <DropdownItem key="JavaScript">JavaScript</DropdownItem>
             <DropdownItem key="Go">Go</DropdownItem>
           </DropdownMenu>
         </Dropdown>
