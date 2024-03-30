@@ -1,0 +1,4 @@
+1) When submitted a solution while submissions tab is open, it is not updating live in the tab. Change the tab and come back to see the  
+   changes
+
+2) Multiple Socket Connections for each problem
